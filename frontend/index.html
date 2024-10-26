@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do App</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+    <script src="Login.js" type="module"></script>
+    <script src="backend\backend.js" defer></script>
+  </head>
+  <body>
+    <div id="container">
+      <div class="login">
+        <div class="content">
+          <div class="input">
+            <input type="text" id="username" placeholder="Username" />
+          </div>
+          <div class="input">
+            <input type="text" id="password" placeholder="Password" />
+          </div>
+          <div class="signinbutton">
+            <button
+              onclick="handleSignIn()"
+              type="button"
+              class="login-buttons"
+            >
+              SignIn
+            </button>
+            <button
+              type="button"
+              onclick="handleSignUp()"
+              class="login-buttons"
+            >
+              SignUp
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="main" class="hidden">
+      <div class="todo-container">
+        <div class="searchbox">
+          <input class="todolist1" type="text" placeholder="Enter your ToDo" />
+          <button class="todo-button" onclick="handleAddToDo()">
+            Add ToDo
+          </button>
+        </div>
+      </div>
+      <div class="todo-list">
+        <div class="lists"></div>
+      </div>
+    </div>
+  </body>
+</html>
