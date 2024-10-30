@@ -24,7 +24,15 @@ function newElement(todo, uniqueId) {
 }
 
 async function handleDelete(id) {
-  await axios.delete(`http://localhost:3000/todos/${id}`);
+  const buttonParent = document.getElementById(id).parentElement;
+
+  const Text = buttonParent.querySelector("span").textContent;
+
+  await axios.delete(`http://localhost:3000/todos/${id}`, {
+    data: {
+      Text: Text,
+    },
+  });
 
   const button = document.getElementById(id);
 
@@ -41,11 +49,12 @@ async function handleAddToDo() {
   });
   const uniqueId = response.data.id;
 
-  const response1 = await axios.get(
-    `http://localhost:3000/todos/${response.data.id}`
-  );
+  // const response1 = await axios.get(
+  //   `http://localhost:3000/todos/${response.data.id}`
+  // );
+  console.log(response.data.description);
 
-  newElement(response1.data.todo[0], uniqueId);
+  newElement(response.data.description, uniqueId);
 
   document.querySelector(".todolist1").value = "";
 }
@@ -59,7 +68,11 @@ async function handleSignUp() {
       username: username,
       password: password,
     });
-    alert("Signed Up successfully");
+    if (response.data.error) {
+      alert(response.data.error.issues[0].message);
+    } else {
+      alert("Signed Up successfully");
+    }
     document.getElementById("username").value = "";
     document.getElementById("password").value = "";
   } catch (err) {
@@ -80,6 +93,9 @@ async function handleSignIn() {
     });
 
     localStorage.setItem("token", response.data.token);
+
+    axios.defaults.headers.common["token"] = localStorage.getItem("token");
+
     alert("Signed In Successfully");
     const LoginContainer = document.getElementById("container");
     const todoContainer = document.getElementById("main");
@@ -92,9 +108,9 @@ async function handleSignIn() {
 
   try {
     const response = await axios.get("http://localhost:3000/todos");
-    const todos = response.data.ToDos;
+    const todos = response.data.todos;
     for (let i = 0; i < todos.length; i++) {
-      newElement(todos[i].description, todos[i].id);
+      newElement(todos[i].description, todos[i]._id + i);
     }
   } catch (error) {
     console.log(error);
