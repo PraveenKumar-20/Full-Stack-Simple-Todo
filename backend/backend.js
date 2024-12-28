@@ -11,12 +11,6 @@ app.use(express.json());
 const { UserModel, TodoModel } = require("./db");
 const { default: mongoose } = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://kumarpraveen8464:SN589zMUOmxJmuQn@cluster0.qlst3.mongodb.net/todo-data-base"
-);
-
-const users = [];
-
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 app.get("/", function (req, res) {
@@ -54,6 +48,7 @@ app.post("/signup", async function (req, res) {
   }
   const username = req.body.username;
   const password = req.body.password;
+  console.log(username, password);
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // const foundUser = users.find((u) => u.username == username);
